@@ -4,14 +4,9 @@ public class CaesarCipherProject {
 	public static String deciphering(String sentence, int displacement) {
 		char[] letters = sentence.toCharArray();
 
-		if (displacement < 0) {
-			System.out.println("Displacement must be a positive number");
-			return null;
-		}
-
 		if (sentence == null || sentence.equals("")) {
 			System.out.println("The sentence must have value");
-			return null;
+			return "";
 		}
 		String bulAlphabet = "абвгдежзийклмнопрстуфхцчшщъьюя";
 		String bulCapAlphabet = bulAlphabet.toUpperCase(); //главните букви на кирилица
@@ -28,12 +23,12 @@ public class CaesarCipherProject {
 				if (displacement > 26) {
 					engDisplacement = displacement % 26;
 				}
-				//проверяваме дали буквата за дешифроване при отместване 
+				//проверяваме дали буквата за дешифриране при отместване 
 				//ще отиде преди ascii кода на "А"
 				if (letters[i] - engDisplacement < 65) {
 					//от ascii кода на последната буква (Z) вадим разликата от 
 					//кода на буквата и engDisplacement + 64 
-					//пример: 'H' - 72(ascii) - 8(displ) < 65 => 90  
+					//пример: 'H' - 72(ascii) - 8(displ) < 65 => 90 
 					letters[i] = (char) (letters[i] + 90 - (engDisplacement + 64));
 				} else {
 					//вадим отместването от ascii кода на буквата 
@@ -53,7 +48,7 @@ public class CaesarCipherProject {
 					if (letters[i] - engDisplacement < 97) {
 						//от ascii кода на последната буква (z) вадим разликата от 
 						//кода на буквата и engDisplacement + 96 
-						//пример: 'c' - 99(ascii) - 5(displ) < 97 => 122 - 3 -> 'x'
+						//пример: 'c' - 99(ascii) - 5(displ) < 97 => 122 - 2 -> 'дабалю'
 						letters[i] = (char) (letters[i] + 122 - (engDisplacement + 96));
 					} else {
 						letters[i] -= engDisplacement;
@@ -115,14 +110,10 @@ public class CaesarCipherProject {
 
 	public static String ciphering(String sentence, int displacement) {
 		char[] letters = sentence.toCharArray();
-		if (displacement < 0) {
-			System.out.println("Displacement must be a positive number");
-			return null;
-		}
-
+	
 		if (sentence == null || sentence.equals("")) {
 			System.out.println("The sentence must have value");
-			return null;
+			return "";
 		}
 		String bulAlphabet = "абвгдежзийклмнопрстуфхцчшщъьюя";
 		String bulCapAlphabet = bulAlphabet.toUpperCase();
@@ -243,11 +234,17 @@ public class CaesarCipherProject {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Insert a sentence: ");
 		String sentence = input.nextLine();
-		System.out.println("Insert displacement");
+		System.out.println("Insert displacement: ");
 		int displacement = input.nextInt();
+		if (displacement < 0) {
+			System.out.println("It was inserted a negative number =>we take its absolute value: " + Math.abs(displacement));
+			displacement = Math.abs(displacement);
+		}
 
+		System.out.println("The cyphered text is:");
 		System.out.println(ciphering(sentence, displacement));
 		//ciphering(sentence, displacement) това е шифрованото съобщение или текст
+		System.out.println("The decyphered text is:");
 		System.out.println(deciphering(ciphering(sentence, displacement), displacement));
 
 	}
